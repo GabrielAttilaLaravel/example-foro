@@ -9,4 +9,9 @@ class Post extends Model
     // para evitar el error de asignacion masiva
     // Illuminate\Database\Eloquent\MassAssignmentException
     protected $fillable = ['title', 'content'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
