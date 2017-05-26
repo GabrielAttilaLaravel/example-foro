@@ -2,7 +2,7 @@
 
 class CreatePostsTest extends FeatureTestCase
 {
-    public function test_a_user_create_a_post()
+    function test_a_user_create_a_post()
     {
         /** Having (Teniendo) **/
         $title = 'Esta es una pregunta';
@@ -37,7 +37,7 @@ class CreatePostsTest extends FeatureTestCase
         $this->see($title);
     }
 
-    public function test_creating_a_post_requires_authentication()
+    function test_creating_a_post_requires_authentication()
     {
         /** When (Cuando) **/
         // visitamos la ruta posts.create
@@ -45,5 +45,22 @@ class CreatePostsTest extends FeatureTestCase
         /** Then (Entonces) **/
         // si el usuario no esta logeado lo redirecciona a la pagina de login
             ->seePageIs(route('login'));
+    }
+
+
+    public function test_create_post_form_validation()
+    {
+        // generamos un usuario y simulamos la coneccion
+        $this->actingAs($user = $this->defaultUser())
+            // una ves conectados visitamos la ruta para crear el post
+            ->visit(route('posts.create'))
+            // presionamos el boton publicar
+            ->press('Publicar')
+            // deberiamos ver que la pagina aun es la misma
+            ->seePageIs(route('posts.create'))
+            // y deberiamos ver el elemento siguiente cin el mensaje de ayuda
+            ->seeInElement('#field_title.has-error .help-block', 'El campo título es obligatorio')
+            ->seeInElement('#field_content.has-error .help-block', 'El campo contenido es obligatorio')
+        ;
     }
 }
