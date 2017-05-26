@@ -58,9 +58,11 @@ class CreatePostsTest extends FeatureTestCase
             ->press('Publicar')
             // deberiamos ver que la pagina aun es la misma
             ->seePageIs(route('posts.create'))
-            // y deberiamos ver el elemento siguiente cin el mensaje de ayuda
-            ->seeInElement('#field_title.has-error .help-block', 'El campo título es obligatorio')
-            ->seeInElement('#field_content.has-error .help-block', 'El campo contenido es obligatorio')
+            // y deberiamos ver el elemento siguiente con el mensaje de ayuda
+            ->seeErrors([
+                'title' => 'El campo título es obligatorio',
+                'content' => 'El campo contenido es obligatorio'
+            ])
         ;
     }
 }
