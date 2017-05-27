@@ -29,7 +29,6 @@ class ShowPostTest extends FeatureTestCase
         $user->posts()->save($post);
 
         /** When (Cuando) **/
-
         // visitamos una pagina
         $this->visit(route('posts.show', $post))
             // vemos en un elemento <h1> el titulo del post
