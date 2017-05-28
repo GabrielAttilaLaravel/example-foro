@@ -20,7 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 
 // usamos implicit model binding (Vinculación de modelo implícita)
-Route::get('posts/{post}', [
+Route::get('posts/{post}-{slug}', [
     'as' => 'posts.show',
     'uses' => 'PostController@show'
 ])->where('posts', '\d+');
