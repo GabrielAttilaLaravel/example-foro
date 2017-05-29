@@ -1,10 +1,5 @@
 <?php
 
-use App\Post;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
-
 class ShowPostTest extends FeatureTestCase
 {
     /**
@@ -20,9 +15,10 @@ class ShowPostTest extends FeatureTestCase
         ]);
 
         // creamos un post pero aun no lo guardamos en la db (make)
-        $post = factory(Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Este es el titulo del post',
-            'content' => 'Este es el contenido del post'
+            'content' => 'Este es el contenido del post',
+            'user_id' => $user->id
         ]);
 
         // asignamos un author al post (se asigna automaricamente el user_id al post)
@@ -36,7 +32,7 @@ class ShowPostTest extends FeatureTestCase
             // tambien tendriamos que ver el contenido del post
             ->see($post->content)
             // y finalmente veriamos el author del post
-            ->see($user->name);
+            ->see('Gabriel Moreno');
 
     }
 
@@ -46,15 +42,15 @@ class ShowPostTest extends FeatureTestCase
         /** Having (Teniendo) **/
 
         // creamos un user
-        $user = $this->defaultUser();
+        //$user = $this->defaultUser();
 
         // creamos un post pero aun no lo guardamos en la db (make)
-        $post = factory(Post::class)->make([
-        'title' => 'Old title',
+        $post = $this->createPost([
+            'title' => 'Old title',
         ]);
 
         // asignamos un author al post (se asigna automaricamente el user_id al post)
-        $user->posts()->save($post);
+        //$user->posts()->save($post);
 
         // optenemos la url del post
         $url = $post->url;

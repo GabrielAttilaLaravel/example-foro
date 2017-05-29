@@ -1,26 +1,17 @@
 <?php
 
-use App\Post;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PostIntegrationTest extends TestCase
 {
     use DatabaseTransactions;
 
-    function test_a_slug_is_generarted_and_saved_to_the_databse()
+    function test_a_slug_is_generarted_and_saved_to_the_database()
     {
-        // creamos un user
-        $user = $this->defaultUser([
-            'name' => 'Gabriel Moreno'
-        ]);
-
         // creamos un post pero aun no lo guardamos en la db (make)
-        $post = factory(Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Como instalar Laravel',
         ]);
-
-        // asignamos un author al post (se asigna automaricamente el user_id al post)
-        $user->posts()->save($post);
 
         // guardamos el post
         $post->save();
