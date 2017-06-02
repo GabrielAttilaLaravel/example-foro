@@ -11,6 +11,11 @@ class Post extends Model
     // Illuminate\Database\Eloquent\MassAssignmentException
     protected $fillable = ['title', 'content'];
 
+    // forsamos a un campo ser de tipo boolean
+    protected $casts = [
+        'pending' => 'boolean'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
