@@ -27,6 +27,12 @@ class Post extends Model
         return $this->hasMany(Comment::class);
     }
 
+    // llamamos una relacion dentro de otra relacion
+    public function latestComments()
+    {
+        return $this->comments()->orderBy('created_at', 'DESC');
+    }
+
     public function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;

@@ -18,4 +18,16 @@
         </button>
 
     {!! Form::close() !!}
+
+    @forelse($post->latestComments as $comment)
+        <article class="{{ $comment->answer ? 'answer' : '' }}">
+            {{ $comment->comment }}
+
+            {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
+            <button type="submit">Aceptar respuesta</button>
+            {!! Form::close() !!}
+        </article>
+    @empty
+        Este post aun no tiene comentarios
+    @endforelse
 @endsection

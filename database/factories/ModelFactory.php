@@ -27,7 +27,7 @@ $factory->define(\App\Post::class, function (\Faker\Generator $faker){
     return [
         'title' => $faker->sentence(),
         'content' => $faker->paragraph,
-        'pending' => $faker->boolean(),
+        'pending' => true,
         // creamos el usuario solo si no se perzonaliza, solamente con colocarlo dentro de un closer
         'user_id' => function(){
             return factory(\App\User::class)->create()->id;
