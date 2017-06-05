@@ -16,6 +16,11 @@ class CommentController extends Controller
 
     public function accept(Comment $comment)
     {
+        // implementamos la politica de acceso para que aun si el boton no se muestre no puedan
+        // modificar colocar el post como respeusta
+        // (deja pasar a los usuarios que estan autorizados para aceptar este comentario)
+        $this->authorize('accept', $comment);
+
         $comment->markAsAnswer();
 
         return redirect($comment->post->url);

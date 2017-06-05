@@ -22,10 +22,19 @@
     @forelse($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
             {{ $comment->comment }}
+            {{-- 1: can('accept', $comment)
+                    antes de mostrar el formulario nos preguntamos:
+                    si el usuario esta conectado aceptamos el comentario
 
-            {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
-            <button type="submit">Aceptar respuesta</button>
-            {!! Form::close() !!}
+                2: Gate::allow('accept', $comment)
+                    Si el usuario puede aceptar el comentario y este comentario no esta ya marcado
+                    como la respuesta del post entonces mostramos el formulario
+            --}}
+            @if(Gate::allows('accept', $comment) && !$comment->answer)
+                {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
+                    <button type="submit">Aceptar respuesta</button>
+                {!! Form::close() !!}
+            @endif
         </article>
     @empty
         Este post aun no tiene comentarios
