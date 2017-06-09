@@ -1,7 +1,6 @@
 <?php
 
-use App\Post;
-use App\User;
+use App\{Post, User, Comment};
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
@@ -45,5 +44,10 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function createPost(array $attributes = [])
     {
         return factory(Post::class)->create($attributes);
+    }
+
+    protected function createComment(array $attributes = [])
+    {
+        return factory(Comment::class)->create($attributes);
     }
 }

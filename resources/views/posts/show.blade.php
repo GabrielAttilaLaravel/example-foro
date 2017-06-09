@@ -2,8 +2,8 @@
 
 @section('content')
     <h1>{{ $post->title }}</h1>
-
-    <p>{{ $post->content }}</p>
+    {{-- Escapamos el contenido antes de convertirlo en markdown con e() --}}
+    {!! $post->safe_html_content !!}
 
     <p>{{  $post->user->name }}</p>
 
@@ -21,6 +21,9 @@
 
     @forelse($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
+
+            {{-- todo: support markadown in the comments as well --}}
+
             {{ $comment->comment }}
             {{-- 1: can('accept', $comment)
                     antes de mostrar el formulario nos preguntamos:
