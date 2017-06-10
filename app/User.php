@@ -44,6 +44,11 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
+    public function subscriptions()
+    {
+        return $this->belongsToMany(Post::class, 'subscriptions');
+    }
+
     public function comment(Post $post, $message)
     {
         $comment = new Comment([
@@ -54,6 +59,18 @@ class User extends Authenticatable
         $this->comments()->save($comment);
     }
 
+    // verificamos si un usuario esta suscrito a un post en particular
+    public function isSubscribedTo(Post $post)
+    {
+        return $this->subscriptions()->where('post_id', $post->id)->count() > 0;
+    }
+
+    public function subscribeTo(Post  $post)
+    {
+        $this->subscriptions()->attach($post);
+    }
+
+    // owns: posee
     public function owns(Model $model)
     {
         // verificamos si un usuario es propietario de un modelo
