@@ -3,9 +3,9 @@
 @section('content')
     <h1>{{ $post->title }}</h1>
     {{-- Escapamos el contenido antes de convertirlo en markdown con e() --}}
-    {!! $post->safe_html_content !!}
+    {!! $post->convertToHtml($post->content) !!}
 
-    <p>{{  $post->user->name }}</p>
+    <p>{{ $post->user->name }}</p>
 
     <h4>Comentarios</h4>
 
@@ -24,7 +24,7 @@
 
             {{-- todo: support markadown in the comments as well --}}
 
-            {{ $comment->comment }}
+            {!! $comment->convertToHtml($comment->comment) !!}
             {{-- 1: can('accept', $comment)
                     antes de mostrar el formulario nos preguntamos:
                     si el usuario esta conectado aceptamos el comentario

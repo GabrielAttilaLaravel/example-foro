@@ -5,14 +5,14 @@ class SupportMarkdownTest extends FeatureTestCase
 {
     function test_the_post_content_support_markdown()
     {
-        $importntText = 'Un texto muy importante';
+        $importantText = 'Un texto muy importante';
 
         $post = $this->createPost([
-            'content' => "La primera parte del texto. **$importntText**. La última parte del texto"
+            'content' => "La primera parte del texto. **$importantText**. La última parte del texto"
         ]);
 
         $this->visit($post->url)
-            ->seeInElement('strong', $importntText);
+            ->seeInElement('strong', $importantText);
     }
 
 

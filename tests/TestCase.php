@@ -1,6 +1,7 @@
 <?php
 
 use App\{Post, User, Comment};
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
