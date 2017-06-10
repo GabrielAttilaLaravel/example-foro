@@ -51,4 +51,21 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
     {
         return factory(Comment::class)->create($attributes);
     }
+
+    protected function support_markdown($obj, $url, $text){
+        $obj->visit($url)
+            ->seeInElement('strong', $text);
+    }
+
+    protected function xss_attack($obj, $url, $xssAttack){
+        $obj->visit($url)
+            ->dontSee($xssAttack)
+            ->seeText('Texto normal')
+            ->seeText($xssAttack);
+    }
+
+    protected function xss_attack_with_html($obj, $url, $xssAttack){
+        $obj->visit($url)
+            ->dontSee($xssAttack);
+    }
 }
