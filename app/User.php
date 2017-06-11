@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -49,6 +50,17 @@ class User extends Authenticatable
         return $this->belongsToMany(Post::class, 'subscriptions');
     }
 
+    public function createPost(array $data)
+    {
+        $post = new Post($data);
+
+        $this->posts()->save($post);
+
+        $this->subscribeTo($post);
+
+        return $post;
+    }
+
     public function comment(Post $post, $message)
     {
         $comment = new Comment([
@@ -68,6 +80,11 @@ class User extends Authenticatable
     public function subscribeTo(Post  $post)
     {
         $this->subscriptions()->attach($post);
+    }
+
+    public function unsubscribeFrom(Post  $post)
+    {
+        $this->subscriptions()->detach($post);
     }
 
     // owns: posee
