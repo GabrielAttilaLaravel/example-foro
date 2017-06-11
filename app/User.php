@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Notifications\PostCommented;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -69,6 +70,17 @@ class User extends Authenticatable
         ]);
 
         $this->comments()->save($comment);
+
+        // Notify subscribers
+        // 1 - Subscriptores del post
+        // 2 - La notificacion que queremos enviar
+        //    1 - autor del comentario
+        //    2 - el comentario
+        Notification::send($post->subscribers()->where('users.id', '!=', $this->id)->get(),
+            new PostCommented($this, $comment)
+        );
+
+        return $comment;
     }
 
     // verificamos si un usuario esta suscrito a un post en particular
