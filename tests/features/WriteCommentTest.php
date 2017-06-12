@@ -1,9 +1,14 @@
 <?php
 
+use Illuminate\Support\Facades\Notification;
+
 class WriteCommentTest extends FeatureTestCase
 {
     function test_a_user_can_write_a_comment()
     {
+        // colocamos esta notificacion para no dispara notificaciones reales al momento de crear un comentario
+        Notification::fake();
+
         // creamos un post
         $post = $this->createPost();
 

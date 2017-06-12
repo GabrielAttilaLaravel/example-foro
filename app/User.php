@@ -77,7 +77,7 @@ class User extends Authenticatable
         //    1 - autor del comentario
         //    2 - el comentario
         Notification::send($post->subscribers()->where('users.id', '!=', $this->id)->get(),
-            new PostCommented($this, $comment)
+            new PostCommented($comment)
         );
 
         return $comment;
