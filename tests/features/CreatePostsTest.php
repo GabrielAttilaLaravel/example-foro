@@ -73,7 +73,6 @@ class CreatePostsTest extends FeatureTestCase
             ->seeErrors([
                 'title' => 'El campo título es obligatorio',
                 'content' => 'El campo contenido es obligatorio'
-            ])
-        ;
+            ]);
     }
 }

@@ -35,8 +35,6 @@
     @forelse($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
 
-            {{-- todo: support markadown in the comments as well --}}
-
             {!! $comment->convertToHtml($comment->comment) !!}
             {{-- 1: can('accept', $comment)
                     antes de mostrar el formulario nos preguntamos:

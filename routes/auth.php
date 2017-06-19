@@ -33,3 +33,4 @@ Route::delete('posts/{post}/subscribe', [
     'uses' => 'SubscriptionController@unsubscribe',
     'as' => 'posts.unsubscribe'
 ]);
+

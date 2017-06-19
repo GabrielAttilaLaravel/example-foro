@@ -31,7 +31,7 @@ abstract class TestCase extends Illuminate\Foundation\Testing\TestCase
         return $app;
     }
 
-    // creamosun usuario y lo retornamos
+    // creamos un usuario y lo retornamos
     public function defaultUser(array $attributes = [])
     {
         // nos aseguramos si el user fue creado

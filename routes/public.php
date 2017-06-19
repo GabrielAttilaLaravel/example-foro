@@ -16,7 +16,7 @@ Route::get('/', [
     'as' => 'posts.index'
 ]);
 
-Auth::routes();
+//Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
@@ -25,3 +25,4 @@ Route::get('posts/{post}-{slug}', [
     'as' => 'posts.show',
     'uses' => 'PostController@show'
 ])->where('posts', '\d+');
+
