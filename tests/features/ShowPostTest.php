@@ -11,7 +11,8 @@ class ShowPostTest extends FeatureTestCase
 
         // creamos un user
         $user = $this->defaultUser([
-            'name' => 'Gabriel Moreno'
+            'first_name' => 'Gabriel',
+            'last_name' => 'Moreno'
         ]);
 
         // creamos un post pero aun no lo guardamos en la db (make)

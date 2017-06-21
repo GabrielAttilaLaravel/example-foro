@@ -105,4 +105,9 @@ class User extends Authenticatable
         // verificamos si un usuario es propietario de un modelo
         return $this->id === $model->user_id;
     }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name.' '.$this->last_name;
+    }
 }
