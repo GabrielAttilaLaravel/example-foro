@@ -17,6 +17,12 @@ class Token extends Model
         return $this->belongsTo(User::class);
     }
 
+    // le indicamos a eloquent que el atributo que va  a utilizar para generar la url va hacer el token y no el id
+    public function getRouteKeyName()
+    {
+        return 'token';
+    }
+
     public static function generateFor(User $user)
     {
         $token = new static;

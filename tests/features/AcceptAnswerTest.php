@@ -12,7 +12,7 @@ class AcceptAnswerTest extends FeatureTestCase
             'comment' => 'Esta va a ser la respuesta del post'
         ]);
 
-        // simulamos un login del usuario
+        // simulamos un token del usuario
         $this->actingAs($comment->post->user);
 
         // visitamos la pagina del post
@@ -40,7 +40,7 @@ class AcceptAnswerTest extends FeatureTestCase
             'comment' => 'Esta va a ser la respuesta del post'
         ]);
 
-        // simulamos un login del usuario
+        // simulamos un token del usuario
         $this->actingAs(factory(User::class)->create());
 
         // visitamos la pagina del post y no deberiamos ver el boton de Aceptar respuesta
@@ -55,7 +55,7 @@ class AcceptAnswerTest extends FeatureTestCase
             'comment' => 'Esta va a ser la respuesta del post'
         ]);
 
-        // simulamos un login del usuario
+        // simulamos un token del usuario
         $this->actingAs(factory(User::class)->create());
 
         // enviamos un comentario a la url accept del post directamente asi el boton no se este viendo
@@ -75,7 +75,7 @@ class AcceptAnswerTest extends FeatureTestCase
             'comment' => 'Esta va a ser la respuesta del post'
         ]);
 
-        // simulamos un login del usuario
+        // simulamos un token del usuario
         $this->actingAs($comment->post->user);
 
         // marcamos el comentario como respuesta del post

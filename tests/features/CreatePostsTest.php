@@ -54,8 +54,8 @@ class CreatePostsTest extends FeatureTestCase
         // visitamos la ruta posts.create
         $this->visit('posts/create')
         /** Then (Entonces) **/
-        // si el usuario no esta logeado lo redirecciona a la pagina de login
-            ->seePageIs(route('login'));
+        // si el usuario no esta logeado lo redirecciona a la pagina de token
+            ->seePageIs(route('token'));
     }
 
 
