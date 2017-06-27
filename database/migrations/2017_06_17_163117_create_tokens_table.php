@@ -18,8 +18,8 @@ class CreateTokensTable extends Migration
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-
-            $table->string('token', 60);
+            // hacemos que sea sensible a las mayusculas
+            $table->binary('token');
 
             $table->timestamps();
         });

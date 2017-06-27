@@ -3,17 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Token;
-use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function login(Token $token)
+    public function login($token)
     {
-        // autenticamos al usuario con el facade Auth
-        Auth::login($token->user);
+        // hacemos una consulta para obtener el token
+        $token = Token::findActive($token);
 
-        // eliminamos el token despues de autenticar al usuario
-        $token->delete();
+        // verificamos si es null el token
+        if ($token == null){
+            // mandamos un mensaje de error
+            alert('Este enlace ya expiró, por favor solicita otro.', 'danger');
+
+            // redirigimos para que pueda solicitar otro token
+            return redirect()->route('token');
+        }
+
+        // autenticamos al usuario con el facade Auth y eliminamos el token despues de autenticar al usuario
+        $token->login();
 
         return redirect('/');
     }
