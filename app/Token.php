@@ -58,4 +58,10 @@ class Token extends Model
         // eliminamos el token despues de autenticar al usuario
         $this->delete();
     }
+
+    public function getUrlAttribute()
+    {
+        // devolvemos la url para iniciar sesion
+        return route('login', ['token' => $this->token]);
+    }
 }
