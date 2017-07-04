@@ -36,11 +36,10 @@ class RegistrationTest extends FeatureTestCase
         $this->assertNotNull($token);
 
         // comprobamos que el usuario recibe el token
-        // 1 - A quien le vamos a enviar el email
-        // 2 - el nombre de la clase que esamos usando para enviar el email
-        // 3 - closer para verificar el envio del token
-        Mail::assertSentTo($user, TokenMail::class, function ($mail) use ($token){
-            return $mail->token->id == $token->id;
+        // 1 - el nombre de la clase que esamos usando para enviar el email
+        // 2 - closer para verificar el envio del token
+        Mail::assertSent(TokenMail::class, function ($mail) use ($token, $user){
+            return $mail->hasTo($user) && $mail->token->id == $token->id;
         });
 
         $this->visitRoute('register_confirmation')

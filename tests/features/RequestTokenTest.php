@@ -26,11 +26,10 @@ class RequestTokenTest extends FeatureTestCase
         $this->assertNotNull($token, 'A token was not created.');
 
         // comprobamos que el usuario recibe el token
-        // 1 - A quien le vamos a enviar el email
-        // 2 - el nombre de la clase que estamos usando para enviar el email
-        // 3 - closer para verificar el envio del token
-        Mail::assertSentTo($user, TokenMail::class, function ($mail) use ($token){
-            return $mail->token->id == $token->id;
+        // 1 - el nombre de la clase que estamos usando para enviar el email
+        // 2 - closer para verificar el envio del token
+        Mail::assertSent(TokenMail::class, function ($mail) use ($token, $user){
+            return $mail->hasTo($user) && $mail->token->id == $token->id;
         });
 
         // verificamos que el usuario aun no a iniciado sesion hasta que le click a la url enviada al email
