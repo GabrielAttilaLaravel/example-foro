@@ -9,9 +9,8 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="App">
-            <directory suffix="Test.php">./tests</directory>
-            <exclude>./tests/Browser</exclude>
+        <testsuite name="Browser Test Suite">
+            <directory suffix="Test.php">./tests/Browser</directory>
         </testsuite>
     </testsuites>
     <filter>
@@ -19,12 +18,4 @@
             <directory suffix=".php">./app</directory>
         </whitelist>
     </filter>
-    <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="QUEUE_DRIVER" value="sync"/>
-        <env name="DB_CONNECTION" value="mysql_tests"/>
-        <env name="MAIL_DRIVER" value="array" />
-    </php>
 </phpunit>
