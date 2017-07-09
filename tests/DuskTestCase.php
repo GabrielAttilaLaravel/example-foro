@@ -48,5 +48,8 @@ abstract class DuskTestCase extends BaseTestCase
         );
     }
 
-
+    protected function configure($app)
+    {
+        $app->make('config')->set('database.default', 'mysql_dusk_local');
+    }
 }
