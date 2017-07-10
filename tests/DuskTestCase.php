@@ -47,9 +47,4 @@ abstract class DuskTestCase extends BaseTestCase
             'http://localhost:9515', DesiredCapabilities::chrome()
         );
     }
-
-    protected function configure($app)
-    {
-        $app->make('config')->set('database.default', 'mysql_dusk_local');
-    }
 }

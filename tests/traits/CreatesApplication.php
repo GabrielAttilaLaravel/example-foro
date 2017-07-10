@@ -26,10 +26,6 @@ trait CreatesApplication
 
         $this->baseUrl = $app->make('config')->get('app.url');
 
-        if (method_exists($this, 'configure')) {
-            $this->configure($app);
-        }
-
         return $app;
     }
 }
