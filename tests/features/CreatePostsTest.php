@@ -13,6 +13,8 @@ class CreatePostsTest extends FeatureTestCase
         // generamos un usuario y simulamos la coneccion
         $this->actingAs($user = $this->defaultUser());
 
+        $category = factory(\App\Category::class)->create();
+
         /** When (Cuando) **/
         // visitamos la ruta posts.create
         $this->visit('posts/create')
@@ -20,6 +22,8 @@ class CreatePostsTest extends FeatureTestCase
             ->type($title, 'title')
             // ingresamos el siguiente texto en campo content
             ->type($content, 'content')
+            // seleccionamos la categoria que fue creada
+            ->select($category->id, 'category_id')
             // presionamos el boton publicar
             ->press('Publicar');
 
@@ -31,6 +35,7 @@ class CreatePostsTest extends FeatureTestCase
             'pending' => true,
             'user_id' => $user->id,
             'slug' => 'esta-es-una-pregunta',
+            'category_id' => $category->id
         ]);
 
         $post = Post::first();

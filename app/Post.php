@@ -8,7 +8,7 @@ class Post extends Model
 {
     // para evitar el error de asignacion masiva
     // Illuminate\Database\Eloquent\MassAssignmentException
-    protected $fillable = ['title', 'content'];
+    protected $fillable = ['title', 'content', 'category_id'];
 
     // forsamos a un campo ser de tipo boolean
     protected $casts = [
@@ -18,6 +18,11 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
     }
 
     // un post puede tener muchos comentarios

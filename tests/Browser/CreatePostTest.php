@@ -19,7 +19,9 @@ class CreatePostTest extends DuskTestCase
     {
         $user = $this->defaultUser();
 
-        $this->browse(function (Browser $browser) use ($user){
+        $category = factory(\App\Category::class)->create();
+
+        $this->browse(function (Browser $browser) use ($user, $category){
             /** Having (Teniendo) **/
             // generamos un usuario y simulamos la coneccion
             $browser->loginAs($user)
@@ -27,9 +29,11 @@ class CreatePostTest extends DuskTestCase
                 // visitamos la ruta posts.create
                 ->visitRoute('posts.create')
                 // ingresamos el siguiente texto en campo title
-               ->type('title', $this->title)
+                ->type('title', $this->title)
                 // ingresamos el siguiente texto en campo content
                 ->type('content', $this->content)
+                // seleccionamos la categoria que fue creada
+                ->select('category_id', $category->id)
                 // presionamos el boton publicar
                 ->press('Publicar')
                 /**
