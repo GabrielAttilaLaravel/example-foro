@@ -1,5 +1,6 @@
 <?php
 
+use App\Category;
 use App\Post;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -27,6 +28,51 @@ class PostsListTest extends FeatureTestCase
             ->click($post->title)
             // al hacer click nos llevará a al post
             ->seePageIs($post->url);
+    }
+
+    function test_a_user_can_see_posts_filtered_by_category()
+    {
+        /**
+         * Having
+         */
+        // creamos 2 categorias
+        $laravel = factory(Category::class)->create([
+            'name' => 'Laravel',
+            'slug' => 'laravel'
+        ]);
+
+        $vue = factory(Category::class)->create([
+            'name' => 'Vue.js',
+            'slug' => 'vue-js'
+        ]);
+
+        // creamos un post para cada categoria
+        $laravelPost = factory(Post::class)->create([
+            'title' => 'Post de Laravel',
+            'category_id' => $laravel->id
+        ]);
+
+        $vuePost = factory(Post::class)->create([
+            'title' => 'Post de Vue.js',
+            'category_id' => $vue->id
+        ]);
+
+        /**
+         * When
+         */
+        $this->visit('/')
+            ->see($laravelPost->title)
+            ->see($vuePost->title)
+            // hacemos click en el enlace Laravel q esta dentro del elemento .categories el cual es un select
+            ->within('.categories', function (){
+                $this->click('Laravel');
+            })
+            // esperamos ver en un elemento h1 'Posts de Laravel'
+            ->seeInElement('h1', 'Posts de Laravel')
+            // y tambien vemos el titulo del post de laravel
+            ->see($laravelPost->title)
+            // y ya no se deberia ver el titulo de vue.js
+            ->dontSee($vuePost->title);
     }
 
     function test_the_posts_are_paginated()

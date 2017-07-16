@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Posts</h1>
+    <h1>
+        {{ $category->exists ? 'Posts de '.$category->name : 'Posts' }}
+
+    </h1>
 
     <ul>
         @forelse($posts as $post)
@@ -14,4 +17,8 @@
     </ul>
 
     {{ $posts->render() }}
+
+    {{-- creamos un menu de categorias con styde --}}
+    {!! Menu::make($categoryItems, 'nav categories') !!}
+
 @endsection

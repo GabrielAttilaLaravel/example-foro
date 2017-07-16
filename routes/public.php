@@ -10,8 +10,8 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [
+// {category?}: puedo pasar o no el slug de la categoria
+Route::get('{category?}', [
     'uses' => 'PostController@index',
     'as' => 'posts.index'
 ]);
