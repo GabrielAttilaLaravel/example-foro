@@ -4,13 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Post;
+use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function index(Category $category = null)
+    // optenemos la peticion con el request
+    public function index(Category $category = null, Request $request)
     {
         $posts = Post::orderBy('created_at', 'DESC')
-            ->category($category)
+            ->scopes($this->getListScopes($category, $request))
             ->paginate();
 
         $categoryItems = $this->getCategoryItems();
@@ -39,5 +41,28 @@ class PostController extends Controller
                 'full_url' => route('posts.index', $category)
             ];
         })->toArray();
+    }
+
+    public function getListScopes(Category $category, Request $request)
+    {
+        $scopes = [];
+
+        if ($category->exists){
+            $scopes['category'] = [$category];
+        }
+
+        // optenemos el nombre de la ruta en donde nos encontramos
+        $routeName = $request->route()->getName();
+
+        // si la ruta es posts.pending entonces agregamos al un valor al array de la consulta
+        if ($routeName == 'posts.pending'){
+            // agregamos al scopes el scope del status que va hacer pending
+            $scopes[] = 'pending';
+        }elseif ($routeName == 'posts.completed'){
+            // agregamos al scopes el scope del status que va hacer completed
+            $scopes[] = 'completed';
+        }
+
+        return $scopes;
     }
 }

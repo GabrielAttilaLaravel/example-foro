@@ -10,11 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// {category?}: puedo pasar o no el slug de la categoria
-Route::get('{category?}', [
-    'uses' => 'PostController@index',
-    'as' => 'posts.index'
-]);
 
 //Auth::routes();
 
@@ -26,3 +21,18 @@ Route::get('posts/{post}-{slug}', [
     'uses' => 'PostController@show'
 ])->where('posts', '\d+');
 
+// {category?}: puedo pasar o no el slug de la categoria
+Route::get('posts-pendientes', [
+    'uses' => 'PostController@index',
+    'as' => 'posts.pending'
+]);
+
+Route::get('posts-completados', [
+    'uses' => 'PostController@index',
+    'as' => 'posts.completed'
+]);
+
+Route::get('{category?}', [
+    'uses' => 'PostController@index',
+    'as' => 'posts.index'
+]);

@@ -3,9 +3,6 @@
 use App\Category;
 use App\Post;
 use Carbon\Carbon;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PostsListTest extends FeatureTestCase
 {
@@ -73,6 +70,31 @@ class PostsListTest extends FeatureTestCase
             ->see($laravelPost->title)
             // y ya no se deberia ver el titulo de vue.js
             ->dontSee($vuePost->title);
+    }
+
+    function test_a_user_can_see_posts_filtered_by_status()
+    {
+        $pendingPost = factory(Post::class)->create([
+            'title' => 'Post pendiente',
+            'pending' => true
+        ]);
+
+        $completedPost = factory(Post::class)->create([
+            'title' => 'Post competado',
+            'pending' => false
+        ]);
+
+        // visitamos los posts pendientes
+        $this->visitRoute('posts.pending')
+            // deberiamos ver los posts pendientes
+            ->see($pendingPost->title)
+            // y no deberiamos ver los posts completados
+            ->dontSee($completedPost);
+
+        // visitamos los posts completados
+        $this->visitRoute('posts.completed')
+            ->see($completedPost->title)
+            ->dontSee($pendingPost->title);
     }
 
     function test_the_posts_are_paginated()
