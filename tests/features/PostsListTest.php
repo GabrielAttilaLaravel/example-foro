@@ -6,6 +6,19 @@ use Carbon\Carbon;
 
 class PostsListTest extends FeatureTestCase
 {
+    public function test_a_user_can_see_that_there_are_no_posts()
+    {
+        // visitamos los posts pendientes
+        $this->visitRoute('posts.pending')
+            // no deberiamos ver posts
+            ->see('No hay post por los momentos');
+
+        // visitamos los posts completados
+        $this->visitRoute('posts.completed')
+            // no deberiamos ver posts
+            ->see('No hay post por los momentos');
+    }
+
     function test_a_user_can_see_the_posts_list_and_go_to_the_detalis()
     {
         /** Having (Teniendo) **/
@@ -89,12 +102,14 @@ class PostsListTest extends FeatureTestCase
             // deberiamos ver los posts pendientes
             ->see($pendingPost->title)
             // y no deberiamos ver los posts completados
-            ->dontSee($completedPost);
+            ->dontSee($completedPost)
+            ->dontSee('No hay post por los momentos');
 
         // visitamos los posts completados
         $this->visitRoute('posts.completed')
             ->see($completedPost->title)
-            ->dontSee($pendingPost->title);
+            ->dontSee($pendingPost->title)
+            ->dontSee('No hay post por los momentos');
     }
 
     function test_the_posts_are_paginated()

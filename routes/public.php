@@ -12,8 +12,7 @@
 */
 
 //Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+//Route::get('/home', 'HomeController@index');
 
 // usamos implicit model binding (Vinculación de modelo implícita)
 Route::get('posts/{post}-{slug}', [
@@ -36,3 +35,4 @@ Route::get('{category?}', [
     'uses' => 'PostController@index',
     'as' => 'posts.index'
 ]);
+

@@ -12,6 +12,7 @@ class PostController extends Controller
     public function index(Category $category = null, Request $request)
     {
         $posts = Post::orderBy('created_at', 'DESC')
+            // para optener los scope pending y completed del modelo Post usamos scopes
             ->scopes($this->getListScopes($category, $request))
             ->paginate();
 

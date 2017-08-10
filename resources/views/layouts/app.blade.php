@@ -11,7 +11,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
-    <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
     <!-- Scripts -->
     <script>
@@ -43,7 +43,7 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        &nbsp;
+                        &nbsp;{!! Menu::make('menu.items', 'nav navbar-nav') !!}
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -77,11 +77,21 @@
                 </div>
             </div>
         </nav>
+        <div class="container">
+            @yield('content')
+        </div>
 
-        @yield('content')
     </div>
 
     <!-- Scripts -->
     <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <style type="text/css">
+        .active>a{
+            color: #0364b7;
+            font-weight: bold;
+        }
+    </style>
 </body>
 </html>
