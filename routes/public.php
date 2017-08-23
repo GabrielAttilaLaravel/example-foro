@@ -17,22 +17,22 @@
 // usamos implicit model binding (Vinculación de modelo implícita)
 Route::get('posts/{post}-{slug}', [
     'as' => 'posts.show',
-    'uses' => 'PostController@show'
+    'uses' => 'ShowPostController'
 ])->where('posts', '\d+');
 
 // {category?}: puedo pasar o no el slug de la categoria
 Route::get('posts-pendientes', [
-    'uses' => 'PostController@index',
+    'uses' => 'ListPostController',
     'as' => 'posts.pending'
 ]);
 
 Route::get('posts-completados', [
-    'uses' => 'PostController@index',
+    'uses' => 'ListPostController',
     'as' => 'posts.completed'
 ]);
 
 Route::get('{category?}', [
-    'uses' => 'PostController@index',
+    'uses' => 'ListPostController',
     'as' => 'posts.index'
 ]);
 
