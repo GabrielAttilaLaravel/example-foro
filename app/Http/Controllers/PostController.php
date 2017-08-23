@@ -11,10 +11,17 @@ class PostController extends Controller
     // optenemos la peticion con el request
     public function index(Category $category = null, Request $request)
     {
-        $posts = Post::orderBy('created_at', 'DESC')
+        // optenemos los valores de la lista 'orden' y creamos 2 varibles separndo el array
+        // devuelto por la funcion getListOrder()
+        list($orderColumn, $ordenDirection) = $this->getListOrder($request->get('orden'));
+
+        $posts = Post::orderBy($orderColumn, $ordenDirection)
             // para optener los scope pending y completed del modelo Post usamos scopes
             ->scopes($this->getListScopes($category, $request))
             ->paginate();
+
+        // mantenemos el orden en la paginacion por el campo orden
+        $posts->appends(request()->intersect(['orden']));
 
         $categoryItems = $this->getCategoryItems();
 
@@ -65,5 +72,19 @@ class PostController extends Controller
         }
 
         return $scopes;
+    }
+
+    protected function getListOrder($order)
+    {
+        if ($order == 'recientes'){
+            return ['created_at' , 'desc'];
+        }
+
+        if ($order == 'antiguos'){
+            return ['created_at' , 'asc'];
+        }
+
+        return ['created_at' , 'desc'];
+
     }
 }
