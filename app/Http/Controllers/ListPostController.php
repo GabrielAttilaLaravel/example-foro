@@ -23,22 +23,7 @@ class ListPostController extends Controller
         // mantenemos el orden en la paginacion por el campo orden
         $posts->appends(request()->intersect(['orden']));
 
-        $categoryItems = $this->getCategoryItems();
-
-        return view('posts.index', compact('posts', 'category' , 'categoryItems'));
-    }
-    
-    protected function getCategoryItems()
-    {
-        // como get() nos devuelve una collection vamos a tomar cada categoria y la convertimos en un array
-        return Category::orderBy('name')
-            ->get()
-            ->map(function ($category){
-                return [
-                    'title' => $category->name,
-                    'full_url' => route('posts.index', $category)
-                ];
-        })->toArray();
+        return view('posts.index', compact('posts', 'category'));
     }
 
     public function getListScopes(Category $category, Request $request)

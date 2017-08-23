@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use Carbon\Carbon;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\View;
 use Laravel\Dusk\DuskServiceProvider;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
+use App\Http\Composers\PostSidebarComposer;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Schema::defaultStringLength(191);
+        //Schema::defaultStringLength(191);
     }
 
     /**
@@ -32,5 +34,13 @@ class AppServiceProvider extends ServiceProvider
 
         // configuramos la hora en el idioma que quedamos
         Carbon::setLocale(config('app.locale'));
+
+        // registramos los views composer
+        $this->registerViewComposers();
+    }
+
+    protected function registerViewComposers()
+    {
+        View::composer('posts.sidebar', PostSidebarComposer::class);
     }
 }

@@ -53,4 +53,6 @@
     @empty
         Este post aun no tiene comentarios
     @endforelse
+
+    @include('posts.sidebar')
 @endsection

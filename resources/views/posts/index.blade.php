@@ -7,12 +7,7 @@
     </h1>
 
     <div class="row">
-        <div class="col-md-2">
-            <h4>Filtros</h4>
-                {!! Menu::make('menu.filters', 'nav filters') !!}
-            <h4>Categoría</h4>
-                {!! Menu::make($categoryItems, 'nav categories') !!}
-        </div>
+        @include('posts.sidebar')
         <div class="col-md-10">
 
             {!! Form::open(['method' => 'get', 'class' => 'form form-inline']) !!}
