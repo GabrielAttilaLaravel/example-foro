@@ -85,6 +85,30 @@ class PostsListTest extends FeatureTestCase
             ->dontSee($vuePost->title);
     }
 
+    function test_a_user_can_see_its_own_posts(){
+        // generamos un usuario y simulamos la coneccion
+        $this->actingAs($user = $this->defaultUser());
+
+        $userPost = $this->createPost([
+            'title' => 'Post del usuario',
+            'user_id' => $user->id,
+        ]);
+
+        // creamos un post que tendra como author un usuario aleatorio
+        $anotherUserPost = $this->createPost([
+            'title' => 'Post del otro usuario',
+        ]);
+
+        // cuando visitamos la pagina del listado de post
+        $this->visitRoute('posts.index')
+            // le damos click al boton "Mis posts"
+            ->click('Mis posts')
+            // deberiamos ver el primer posts  y no el 2do post creado
+            ->see($userPost->title)
+            ->dontSee($anotherUserPost->title);
+
+    }
+
     function test_a_user_can_see_posts_filtered_by_status()
     {
         $pendingPost = factory(Post::class)->create([

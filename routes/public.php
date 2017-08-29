@@ -36,3 +36,5 @@ Route::get('{category?}', [
     'as' => 'posts.index'
 ]);
 
+
+

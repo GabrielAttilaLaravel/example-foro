@@ -18,10 +18,9 @@ class ListPostController extends Controller
         $posts = Post::orderBy($orderColumn, $ordenDirection)
             // para optener los scope pending y completed del modelo Post usamos scopes
             ->scopes($this->getListScopes($category, $request))
-            ->paginate();
-
-        // mantenemos el orden en la paginacion por el campo orden
-        $posts->appends(request()->intersect(['orden']));
+            ->paginate()
+            // mantenemos el orden en la paginacion por el campo orden
+            ->appends($request->intersect(['orden']));
 
         return view('posts.index', compact('posts', 'category'));
     }
@@ -30,21 +29,28 @@ class ListPostController extends Controller
     {
         $scopes = [];
 
+        // optenemos el nombre de la ruta en donde nos encontramos
+        $routeName = $request->route()->getName();
+
         if ($category->exists){
             $scopes['category'] = [$category];
         }
 
-        // optenemos el nombre de la ruta en donde nos encontramos
-        $routeName = $request->route()->getName();
+        if ($routeName == 'posts.mine'){
+            // agregamos al scopes el scope el condicional para los post propios
+            $scopes['byUser'] = [$request->user()];
+        }
 
         // si la ruta es posts.pending entonces agregamos al un valor al array de la consulta
         if ($routeName == 'posts.pending'){
             // agregamos al scopes el scope del status que va hacer pending
             $scopes[] = 'pending';
-        }elseif ($routeName == 'posts.completed'){
+        }
+        if ($routeName == 'posts.completed'){
             // agregamos al scopes el scope del status que va hacer completed
             $scopes[] = 'completed';
         }
+
 
         return $scopes;
     }
