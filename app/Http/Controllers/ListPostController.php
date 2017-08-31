@@ -19,8 +19,11 @@ class ListPostController extends Controller
             // usamos carga ambiciosa (Eager Loading)
             // psasamos los modelos o relaciones que queremos cargar
             ->with(['user', 'category'])
-            // para optener los scope pending y completed del modelo Post usamos scopes
-            ->scopes($this->getListScopes($category, $request))
+            // asignamos la categoria
+            ->category($category)
+            // llamamos al metodo getRouteScope para unicializar la variable scope para los condicionales
+            // pending y completed del modelo
+            ->scopes($this->getRouteScope($request))
             ->paginate()
             // mantenemos el orden en la paginacion por el campo orden
             ->appends($request->intersect(['orden']));
@@ -28,47 +31,30 @@ class ListPostController extends Controller
         return view('posts.index', compact('posts', 'category'));
     }
 
-    public function getListScopes(Category $category, Request $request)
+    protected function getRouteScope(Request $request)
     {
-        $scopes = [];
-
-        // optenemos el nombre de la ruta en donde nos encontramos
-        $routeName = $request->route()->getName();
-
-        if ($category->exists){
-            $scopes['category'] = [$category];
-        }
-
-        if ($routeName == 'posts.mine'){
-            // agregamos al scopes el scope el condicional para los post propios
-            $scopes['byUser'] = [$request->user()];
-        }
-
-        // si la ruta es posts.pending entonces agregamos al un valor al array de la consulta
-        if ($routeName == 'posts.pending'){
+        $scopes = [
+            // agregamos al scopes el scope el condicional para los propios post
+            'posts.mine' => ['byUser' => [$request->user()]],
             // agregamos al scopes el scope del status que va hacer pending
-            $scopes[] = 'pending';
-        }
-        if ($routeName == 'posts.completed'){
+            'posts.pending' => ['pending'],
             // agregamos al scopes el scope del status que va hacer completed
-            $scopes[] = 'completed';
-        }
+            'posts.completed' => ['completed']
+        ];
 
-
-        return $scopes;
+        // verificamos si la ruta tiene un scope asociado de lo contrario retornamos un array vacio
+        // $request->route()->getName() = optenemos el nombre de la ruta en donde nos encontramos
+        return $scopes[$request->route()->getName()] ?? []; // php7 operador ternario
+        // return isset($scopes[$name]) ? $scopes[$name] : [];
     }
 
     protected function getListOrder($order)
     {
-        if ($order == 'recientes'){
-            return ['created_at' , 'desc'];
-        }
+        $orders = [
+            'recientes' => ['created_at' , 'desc'],
+            'antiguos'  => ['created_at' , 'asc'],
+        ];
 
-        if ($order == 'antiguos'){
-            return ['created_at' , 'asc'];
-        }
-
-        return ['created_at' , 'desc'];
-
+        return $orders[$order] ?? ['created_at' , 'desc']; // php7 operador ternario
     }
 }
