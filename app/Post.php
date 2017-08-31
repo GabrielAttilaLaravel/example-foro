@@ -28,7 +28,7 @@ class Post extends Model
     // un post puede tener muchos comentarios
     public function comments()
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Comment::class)->with('post');
     }
 
     public function subscribers()

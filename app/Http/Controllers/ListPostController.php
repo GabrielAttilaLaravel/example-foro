@@ -16,6 +16,9 @@ class ListPostController extends Controller
         list($orderColumn, $ordenDirection) = $this->getListOrder($request->get('orden'));
 
         $posts = Post::orderBy($orderColumn, $ordenDirection)
+            // usamos carga ambiciosa (Eager Loading)
+            // psasamos los modelos o relaciones que queremos cargar
+            ->with(['user', 'category'])
             // para optener los scope pending y completed del modelo Post usamos scopes
             ->scopes($this->getListScopes($category, $request))
             ->paginate()
