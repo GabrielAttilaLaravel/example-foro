@@ -10,9 +10,10 @@ class Post extends Model
     // Illuminate\Database\Eloquent\MassAssignmentException
     protected $fillable = ['title', 'content', 'category_id'];
 
-    // forsamos a un campo ser de tipo boolean
+    // forsamos a un campo ser de un tipo en espesifico
     protected $casts = [
-        'pending' => 'boolean'
+        'pending' => 'boolean',
+        'score' => 'integer'
     ];
 
     public function user()

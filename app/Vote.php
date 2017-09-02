@@ -13,13 +13,27 @@ class Vote extends Model
 
     public static function upvote(Post $post)
     {
-        static::create([
-            'user_id' => auth()->id(),
-            'post_id' => $post->id,
-            'vote'    => 1
-        ]);
+        static::addVote($post , 1);
+    }
 
-        $post->score = 1;
+    public static function downVote(Post $post)
+    {
+        static::addVote($post , -1);
+    }
+
+    public static function addVote(Post $post, $amount)
+    {
+        // creamos o actualizamos el post
+        // 1 - condicional para comprobar si existe o no el voto
+        // 2 - valor hacer por el cual va hacer creado o acualizado
+        static::updateOrCreate(
+            ['post_id' => $post->id, 'user_id' => auth()->id()],
+            ['vote' => $amount]
+        );
+
+        // calcular el score del post sumando el total de votos de cada uno de los post
+        $post->score = static::where(['post_id' => $post->id])->sum('vote');
+
         $post->save();
     }
 }
