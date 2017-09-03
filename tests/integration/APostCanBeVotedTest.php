@@ -133,4 +133,23 @@ class APostCanBeVotedTest extends TestCase
         // upvote una sola vez deberia ser igual a "1"
         $this->assertSame(2, $this->post->score);
     }
+
+    // eliminar un voto
+    function test_a_post_can_be_unvoted(){
+        // creamos un post de forma directa
+        Vote::upvote($this->post);
+
+        // pasamos el post al cual vamos a eliminar el voto
+        Vote::undoVote($this->post);
+
+        // verificamos que en la tabla votes no tenemos un voto con la siguiente cracteristica
+        $this->assertDatabaseMissing('votes', [
+            'post_id' => $this->post->id,
+            'user_id' => $this->user->id,
+            'vote' => 1
+        ]);
+
+        // verificamos el score del post para comprobar que tenemos 0
+        $this->assertSame(0, $this->post->score);
+    }
 }
