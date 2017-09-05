@@ -33,8 +33,6 @@ class Vote extends Model
 
         // Actualizamos el scrore del post
         static::refreshPostScore($post);
-
-
     }
 
     public static function undoVote(Post $post)
