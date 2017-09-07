@@ -1,7 +1,6 @@
 <?php
 
 use App\Repositories\voteRepository;
-use App\Vote;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class VoteForPostTest extends TestCase
