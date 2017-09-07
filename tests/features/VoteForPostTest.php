@@ -1,6 +1,5 @@
 <?php
 
-use App\Repositories\voteRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class VoteForPostTest extends TestCase
@@ -76,7 +75,8 @@ class VoteForPostTest extends TestCase
         // creamos un voto
         // Vote::upvote($post);
         // cargamos el repositorio para crear el voto del post
-        app(voteRepository::class)->upvote($post);
+        // app(voteRepository::class)->upvote($post);
+        $post->upvote();
 
         // enviamos una peticion tipo post con la url del post mas '/vote'
         $this->deleteJson($post->url . '/vote')

@@ -25,7 +25,8 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion upvote para poder votar por le post
         // Vote::upvote($this->post);
         // cargamos el repositorio para poder votar por le post
-        app(voteRepository::class)->upvote($this->post);
+        // app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         // verificamos si hay cambio en una tabla espesifica en la DB
         $this->assertDatabaseHas('votes', [
@@ -44,11 +45,14 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion upvote para poder votar por le post
         // Vote::upvote($this->post);
         // cargamos el repositorio para poder votar por le post
-        app(voteRepository::class)->upvote($this->post);
+        //app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         // Vote::upvote($this->post);
         // cargamos el repositorio para poder votar por le post
-        app(voteRepository::class)->upvote($this->post);
+        //app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
+
         // verificamos si hay cambio en una tabla espesifica en la DB
         /**$this->assertDatabaseHas('votes', [
             'post_id' => $post->id,
@@ -67,7 +71,8 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion downVote para darle un punto negativo al post
         // Vote::downVote($this->post);
         // cargamos el repositorio para darle un punto negativo al post
-        app(voteRepository::class)->downVote($this->post);
+        //app(voteRepository::class)->downVote($this->post);
+        $this->post->downVote();
 
         // verificamos si hay cambio en una tabla espesifica en la DB
         $this->assertDatabaseHas('votes', [
@@ -86,11 +91,13 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion upvote para poder votar por le post
         // Vote::downVote($this->post);
         // cargamos el repositorio para darle un punto negativo al post
-        app(voteRepository::class)->downVote($this->post);
+        // app(voteRepository::class)->downVote($this->post);
+        $this->post->downVote();
 
         //Vote::downVote($this->post);
         // cargamos el repositorio para darle un punto negativo al post
-        app(voteRepository::class)->downVote($this->post);
+        //app(voteRepository::class)->downVote($this->post);
+        $this->post->downVote();
 
         $this->assertSame(1, Vote::count());
 
@@ -104,11 +111,13 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion upvote para poder votar por le post
         // Vote::upvote($this->post);
         // cargamos el repositorio para poder votar por le post
-        app(voteRepository::class)->upvote($this->post);
+        //app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         // Vote::downVote($this->post);
         // cargamos el repositorio para darle un punto negativo al post
-        app(voteRepository::class)->downVote($this->post);
+        //app(voteRepository::class)->downVote($this->post);
+        $this->post->downVote();
 
         $this->assertSame(1, Vote::count());
 
@@ -122,11 +131,13 @@ class APostCanBeVotedTest extends TestCase
         // llamamos a la funcion downVote para darle un punto negativo al post
         // Vote::downVote($this->post);
         // cargamos el repositorio para darle un punto negativo al post
-        app(voteRepository::class)->downVote($this->post);
+        //app(voteRepository::class)->downVote($this->post);
+        $this->post->downVote();
 
         // Vote::upvote($this->post);
         // cargamos el repositorio para crear un voto
-        app(voteRepository::class)->upvote($this->post);
+        //app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         $this->assertSame(1, Vote::count());
 
@@ -147,7 +158,8 @@ class APostCanBeVotedTest extends TestCase
         // registramos un voto con le usuario conectado
         // Vote::upvote($this->post);
         // cargamos el repositorio para crear un voto
-        app(voteRepository::class)->upvote($this->post);
+        // app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         $this->assertSame(2, Vote::count());
 
@@ -161,13 +173,14 @@ class APostCanBeVotedTest extends TestCase
         // creamos un post de forma directa
         // Vote::upvote($this->post);
         // cargamos el repositorio para crear el voto del post
-        app(voteRepository::class)->upvote($this->post);
-
+        // app(voteRepository::class)->upvote($this->post);
+        $this->post->upvote();
 
         // pasamos el post al cual vamos a eliminar el voto
         // Vote::undoVote($this->post);
         // cargamos el repositorio para eliminar el voto
-        app(voteRepository::class)->undoVote($this->post);
+        //app(voteRepository::class)->undoVote($this->post);
+        $this->post->undoVote();
 
         // verificamos que en la tabla votes no tenemos un voto con la siguiente cracteristica
         $this->assertDatabaseMissing('votes', [

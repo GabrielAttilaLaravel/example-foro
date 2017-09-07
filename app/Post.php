@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Support\Str;
+use App\Traits\Post\CanBeVoted;
 
 class Post extends Model
 {
+    use CanBeVoted;
     // para evitar el error de asignacion masiva
     // Illuminate\Database\Eloquent\MassAssignmentException
     protected $fillable = ['title', 'content', 'category_id'];
@@ -76,6 +78,4 @@ class Post extends Model
     {
         return route('posts.show', [$this->id, $this->slug]);
     }
-
-
 }
